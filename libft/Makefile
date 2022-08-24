@@ -6,7 +6,7 @@
 #    By: malord <malord@student.42quebec.com>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/30 09:39:10 by malord            #+#    #+#              #
-#    Updated: 2022/06/27 12:56:19 by malord           ###   ########.fr        #
+#    Updated: 2022/08/24 14:19:03 by malord           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -62,9 +62,11 @@ SRCS		=	ft_atoi.c				\
 				ft_strrchr.c			\
 				ft_strtrim.c			\
 				ft_substr.c				\
+				ft_swap.c				\
 				ft_tolower.c			\
 				ft_toupper.c			\
-				get_next_line.c			
+				get_next_line.c			\
+				sort_int_tab.c
 
 OBJS		= 	${SRCS:.c=.o}
 

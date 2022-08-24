@@ -1,38 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   push_swap.c                                        :+:      :+:    :+:   */
+/*   sort_int_tab.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: malord <malord@student.42quebec.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/08/22 15:06:30 by malord            #+#    #+#             */
-/*   Updated: 2022/08/24 14:20:06 by malord           ###   ########.fr       */
+/*   Created: 2022/08/24 14:16:33 by malord            #+#    #+#             */
+/*   Updated: 2022/08/24 14:19:46 by malord           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap.h"
+#include "libft.h"
 
-int	main(int argc, char **argv)
+void	sort_int_tab(int *tab, unsigned int size)
 {
-	int	*stack_a;
-	int	i;
-	int	j;
+	unsigned int	i;
+	int				swapped;
 
-	i = 1;
-	j = 0;
-	stack_a = ft_calloc((argc - 1), sizeof(int));
-	while (argv[i])
+	swapped = 1;
+	while (swapped == 1)
 	{
-		stack_a[j] = ft_atoi(argv[i]);
-		i++;
-		j++;
+		i = 1;
+		swapped = 0;
+		while (i < size)
+		{
+			if (tab[i - 1] > tab[i])
+			{
+				ft_swap(&tab[i - 1], &tab[i]);
+				swapped = 1;
+			}
+			i++;
+		}
 	}
-	i = 0;
-	sort_int_tab(stack_a, (argc - 1));
-	while (stack_a[i])
-	{
-		printf("Element %d : %d\n", i, stack_a[i]);
-		i++;
-	}
-	return (0);
 }
