@@ -6,13 +6,13 @@
 /*   By: malord <malord@student.42quebec.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/22 15:06:30 by malord            #+#    #+#             */
-/*   Updated: 2022/08/25 15:35:42 by malord           ###   ########.fr       */
+/*   Updated: 2022/08/31 16:46:25 by malord           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void	ft_swap_list(t_stack *a, t_stack *b)
+/*void	ft_swap_list(t_stack *a, t_stack *b)
 {
 	int	tmp;
 
@@ -33,7 +33,7 @@ t_stack *sort_list(t_stack *lst, int (*cmp)(int, int))
 	new = lst;
 	while (lst->next != 0)
 	{
-		if (((*cmp)(lst->nb, lst->next->nb)) == 0)
+		if (((*cmp)((int)lst->nb, (int)lst->next->nb)) == 0)
 		{
 			ft_swap_list(lst, lst->next);
 			lst = new;
@@ -42,9 +42,9 @@ t_stack *sort_list(t_stack *lst, int (*cmp)(int, int))
 			lst = lst->next;
 	}
 	return (new);
-}
+}*/
 
-int	main(int argc, char **argv)
+/*int	main(int argc, char **argv)
 {
 	t_stack	*stack_a;
 	t_stack	*head;
@@ -53,7 +53,7 @@ int	main(int argc, char **argv)
 	int		tmp;
 
 	i = 1;
-	stack_a = ft_calloc(sizeof(t_stack), 1);
+	stack_a = ft_calloc(sizeof(t_list), 1);
 	head = stack_a;
 	if (argc > 1)
 	{
@@ -64,7 +64,7 @@ int	main(int argc, char **argv)
 			i++;
 			if (argv[i] != NULL)
 			{
-				tmp_node = ft_calloc(sizeof(t_stack), 1);
+				tmp_node = ft_calloc(sizeof(t_list), 1);
 				stack_a->next = tmp_node;
 				stack_a = stack_a->next;
 			}
@@ -79,6 +79,120 @@ int	main(int argc, char **argv)
 			i++;
 		}
 	}
+}*/
+void	check_limits(char **argv, int index)
+{
+	while (argv[index])
+	{
+		if (ft_atol(argv[index]) > INT_MAX || ft_atol(argv[index]) < INT_MIN)
+		{
+			write(2, "Error\n", 6);
+			exit(0);
+		}
+		else
+			index++;
+	}
+}
+
+void	check_doubles(char **argv, int index)
+{
+	int	j;
+
+	j = 1;
+	while (argv[j])
+	{
+		index = 0;
+		while (argv[index])
+		{
+			if (ft_strcmp(argv[index], argv[j]) == 0 && index != j)
+			{
+				write (2, "Error\n", 6);
+				exit (0);
+			}
+			else
+				index++;
+		}
+		j++;
+	}
+}
+
+void	check_numbers(char **argv, int index)
+{
+	int	j;
+
+	while (argv[index])
+	{
+		j = 0;
+		while (argv[index][j])
+		{
+			if (argv[index][0] == '-' && j == 0)
+				j++;
+			if (ft_isdigit(argv[index][j]) == 0)
+			{
+				write (2, "Error\n", 6);
+				exit (0);
+			}
+			else
+				j++;
+		}
+		index++;
+	}
+}
+
+void	check_errors(char **argv, int index)
+{
+	check_limits(argv, index);
+	check_doubles(argv, index);
+	check_numbers(argv, index);
+}
+
+void	check_sorted(char **argv)
+{
+	int	index;
+
+	index = 1;
+	while (argv[index] && argv[index + 1] != NULL)
+	{
+		if ((ft_atol(argv[index]) > ft_atol(argv[index - 1]))
+			&& (ft_atol(argv[index]) < ft_atol(argv[index + 1])))
+			index++;
+		else
+		{
+			printf("This is not sorted biatch\n");
+			break ;
+		}
+	}
+}
+
+void	check_split(char **argv)
+{
+	char	**quoted_args;
+	int		i;
+
+	i = 0;
+	quoted_args = ft_split(argv[1], ' ');
+	while (quoted_args[i])
+	{
+		printf("%s\n", quoted_args[i]);
+		i++;
+	}
+	if (i >= 1)
+	{
+		check_errors(quoted_args, 0);
+		check_sorted(quoted_args);
+	}
+}
+
+int	main(int argc, char **argv)
+{
+	if (argc == 2)
+		check_split(argv);
+	else if (argc > 2)
+	{
+		check_sorted(argv);
+		check_errors(argv, 1);
+	}
+	exit (0);
 }
 
 /*int	main(int argc, char **argv)
