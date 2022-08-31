@@ -6,7 +6,7 @@
 /*   By: malord <malord@student.42quebec.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/01 08:40:35 by malord            #+#    #+#             */
-/*   Updated: 2022/08/24 14:19:17 by malord           ###   ########.fr       */
+/*   Updated: 2022/08/31 10:22:20 by malord           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ int		ft_isdigit(int n);
 int		ft_isprint(int n);
 int		ft_lstsize(t_list *lst);
 int		ft_memcmp(const void *s1, const void *s2, size_t n);
+int		ft_strcmp(const char *s1, const char *s2);
 int		ft_strncmp(const char *s1, const char *s2, size_t n);
 int		ft_tolower(int n);
 int		ft_toupper(int n);
@@ -85,6 +86,10 @@ char	*get_next_line(int fd);
 // char ** return values functions
 
 char	**ft_split(char const *str, char c);
+
+// long return values functions
+
+long	ft_atol(const char *str);
 
 // size_t return values functions
 

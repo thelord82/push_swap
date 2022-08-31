@@ -6,7 +6,7 @@
 #    By: malord <malord@student.42quebec.com>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/30 09:39:10 by malord            #+#    #+#              #
-#    Updated: 2022/08/24 14:19:03 by malord           ###   ########.fr        #
+#    Updated: 2022/08/31 10:22:40 by malord           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,6 +17,7 @@ CFLAGS		=	-Wall -Werror -Wextra
 RM			=	rm -f
 
 SRCS		=	ft_atoi.c				\
+				ft_atol.c				\
 				ft_bzero.c				\
 				ft_calloc.c				\
 				ft_free.c				\
@@ -56,6 +57,7 @@ SRCS		=	ft_atoi.c				\
 				ft_strlen_bef.c			\
 				ft_strlen_until.c		\
 				ft_strmapi.c			\
+				ft_strcmp.c				\
 				ft_strncmp.c			\
 				ft_strncpy.c			\
 				ft_strnstr.c			\
