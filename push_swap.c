@@ -6,7 +6,7 @@
 /*   By: malord <malord@student.42quebec.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/22 15:06:30 by malord            #+#    #+#             */
-/*   Updated: 2022/08/31 16:46:25 by malord           ###   ########.fr       */
+/*   Updated: 2022/09/01 10:46:18 by malord           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,7 +146,7 @@ void	check_errors(char **argv, int index)
 	check_numbers(argv, index);
 }
 
-void	check_sorted(char **argv)
+/*void	check_sorted(char **argv)
 {
 	int	index;
 
@@ -162,36 +162,82 @@ void	check_sorted(char **argv)
 			break ;
 		}
 	}
+}*/
+
+void	check_sorted(int	*numarray, int size)
+{
+	int	index;
+
+	index = 1;
+	//printf("Valeur de size : %d\n", size);
+	while (index < size && numarray[index + 1] != 0)
+	{
+		if ((numarray[index] > numarray[index - 1])
+			&& (numarray[index] < numarray[index + 1]))
+			{
+				//printf("C'est dans l'ordre !\n");
+				index++;
+			}
+		else
+		{
+			printf("This is not sorted biatch\n");
+			break ;
+		}
+	}
+}
+
+int	*convert_to_int(char **array, int index)
+{
+	int	*converted;
+	int	i;
+
+	i = 1;
+	converted = ft_calloc(index, sizeof(int));
+	index = 0;
+	while (array[i])
+	{
+		converted[index] = ft_atoi(array[i]);
+		//printf("Valeur de converted[%d] : %d\n", index, converted[index]);
+		index++;
+		i++;
+	}
+	return (converted);
 }
 
 void	check_split(char **argv)
 {
 	char	**quoted_args;
 	int		i;
+	int		*converted;
 
 	i = 0;
 	quoted_args = ft_split(argv[1], ' ');
 	while (quoted_args[i])
 	{
-		printf("%s\n", quoted_args[i]);
+		//printf("Contenu du tableau de char a l'element %d : %s\n", i, quoted_args[i]);
 		i++;
 	}
 	if (i >= 1)
 	{
 		check_errors(quoted_args, 0);
-		check_sorted(quoted_args);
+		converted = convert_to_int(quoted_args, 0);
+		check_sorted(converted, i);
 	}
 }
 
 int	main(int argc, char **argv)
 {
+	int	*converted;
+	
 	if (argc == 2)
 		check_split(argv);
 	else if (argc > 2)
 	{
-		check_sorted(argv);
+		converted = convert_to_int(argv, argc - 1);
+		check_sorted(converted, argc - 1);
 		check_errors(argv, 1);
 	}
+	
 	exit (0);
 }
 
