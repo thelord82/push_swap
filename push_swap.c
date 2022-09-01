@@ -6,43 +6,11 @@
 /*   By: malord <malord@student.42quebec.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/22 15:06:30 by malord            #+#    #+#             */
-/*   Updated: 2022/09/01 10:46:18 by malord           ###   ########.fr       */
+/*   Updated: 2022/09/01 15:43:44 by malord           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
-
-/*void	ft_swap_list(t_stack *a, t_stack *b)
-{
-	int	tmp;
-
-	tmp = a->nb;
-	a->nb = b->nb;
-	b->nb = tmp;
-}
-
-int ascending(int a, int b)
-{
-	return (a <= b);
-}
-
-t_stack *sort_list(t_stack *lst, int (*cmp)(int, int))
-{
-	t_stack *new;
-
-	new = lst;
-	while (lst->next != 0)
-	{
-		if (((*cmp)((int)lst->nb, (int)lst->next->nb)) == 0)
-		{
-			ft_swap_list(lst, lst->next);
-			lst = new;
-		}
-		else
-			lst = lst->next;
-	}
-	return (new);
-}*/
 
 /*int	main(int argc, char **argv)
 {
@@ -146,41 +114,29 @@ void	check_errors(char **argv, int index)
 	check_numbers(argv, index);
 }
 
-/*void	check_sorted(char **argv)
-{
-	int	index;
-
-	index = 1;
-	while (argv[index] && argv[index + 1] != NULL)
-	{
-		if ((ft_atol(argv[index]) > ft_atol(argv[index - 1]))
-			&& (ft_atol(argv[index]) < ft_atol(argv[index + 1])))
-			index++;
-		else
-		{
-			printf("This is not sorted biatch\n");
-			break ;
-		}
-	}
-}*/
-
 void	check_sorted(int	*numarray, int size)
 {
 	int	index;
 
 	index = 1;
-	//printf("Valeur de size : %d\n", size);
+	int i = 0;
+	while (i < size)
+	{
+		printf("Valeur de numarray[%d] = : %d\n", i, numarray[i]);
+		i++;
+	}
 	while (index < size && numarray[index + 1] != 0)
 	{
 		if ((numarray[index] > numarray[index - 1])
 			&& (numarray[index] < numarray[index + 1]))
-			{
-				//printf("C'est dans l'ordre !\n");
-				index++;
-			}
+		{
+			index++;
+			if (numarray[index + 1] == 0)
+				printf("This is already sorted cockhead!\n");
+		}
 		else
 		{
-			printf("This is not sorted biatch\n");
+			printf("This is not sorted you fuck\n");
 			break ;
 		}
 	}
@@ -197,7 +153,6 @@ int	*convert_to_int(char **array, int index)
 	while (array[i])
 	{
 		converted[index] = ft_atoi(array[i]);
-		//printf("Valeur de converted[%d] : %d\n", index, converted[index]);
 		index++;
 		i++;
 	}
@@ -213,10 +168,7 @@ void	check_split(char **argv)
 	i = 0;
 	quoted_args = ft_split(argv[1], ' ');
 	while (quoted_args[i])
-	{
-		//printf("Contenu du tableau de char a l'element %d : %s\n", i, quoted_args[i]);
 		i++;
-	}
 	if (i >= 1)
 	{
 		check_errors(quoted_args, 0);
@@ -228,7 +180,7 @@ void	check_split(char **argv)
 int	main(int argc, char **argv)
 {
 	int	*converted;
-	
+
 	if (argc == 2)
 		check_split(argv);
 	else if (argc > 2)
@@ -237,7 +189,6 @@ int	main(int argc, char **argv)
 		check_sorted(converted, argc - 1);
 		check_errors(argv, 1);
 	}
-	
 	exit (0);
 }
 
