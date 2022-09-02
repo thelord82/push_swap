@@ -6,7 +6,7 @@
 /*   By: malord <malord@student.42quebec.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/22 15:06:30 by malord            #+#    #+#             */
-/*   Updated: 2022/09/01 15:43:44 by malord           ###   ########.fr       */
+/*   Updated: 2022/09/02 17:36:00 by malord           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,9 +147,16 @@ int	*convert_to_int(char **array, int index)
 	int	*converted;
 	int	i;
 
-	i = 1;
+	i = 0;
 	converted = ft_calloc(index, sizeof(int));
 	index = 0;
+	if (ft_isint(ft_atoi(array[0])) == 0)
+	{
+		printf("Chu rentrer\n");
+		i = 1;
+	}
+	printf("Valeur i : %d\n", i);
+	printf("contenu de l'array : %s\n", array[i]);
 	while (array[i])
 	{
 		converted[index] = ft_atoi(array[i]);
@@ -168,11 +175,17 @@ void	check_split(char **argv)
 	i = 0;
 	quoted_args = ft_split(argv[1], ' ');
 	while (quoted_args[i])
+	{
+		printf("Valeur de quoted_args[%d] = %s\n", i, quoted_args[i]);
 		i++;
+	}
 	if (i >= 1)
 	{
 		check_errors(quoted_args, 0);
-		converted = convert_to_int(quoted_args, 0);
+		converted = convert_to_int(quoted_args, i);
+		printf("valeur de converted[0] = %d\n", converted[0]);
+		printf("valeur de converted[1] = %d\n", converted[1]);
+		printf("valeur de converted[2] = %d\n", converted[2]);
 		check_sorted(converted, i);
 	}
 }
@@ -186,6 +199,9 @@ int	main(int argc, char **argv)
 	else if (argc > 2)
 	{
 		converted = convert_to_int(argv, argc - 1);
+		printf("valeur de converted[0] = %d\n", converted[0]);
+		printf("valeur de converted[1] = %d\n", converted[1]);
+		printf("valeur de converted[2] = %d\n", converted[2]);
 		check_sorted(converted, argc - 1);
 		check_errors(argv, 1);
 	}
