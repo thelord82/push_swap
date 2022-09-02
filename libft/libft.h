@@ -6,7 +6,7 @@
 /*   By: malord <malord@student.42quebec.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/01 08:40:35 by malord            #+#    #+#             */
-/*   Updated: 2022/08/31 10:22:20 by malord           ###   ########.fr       */
+/*   Updated: 2022/09/02 17:15:54 by malord           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ int		ft_isalpha(int c);
 int		ft_isalnum(int n);
 int		ft_isascii(int n);
 int		ft_isdigit(int n);
+int		ft_isint(int n);
 int		ft_isprint(int n);
 int		ft_lstsize(t_list *lst);
 int		ft_memcmp(const void *s1, const void *s2, size_t n);

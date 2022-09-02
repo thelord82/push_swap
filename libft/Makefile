@@ -6,7 +6,7 @@
 #    By: malord <malord@student.42quebec.com>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/30 09:39:10 by malord            #+#    #+#              #
-#    Updated: 2022/08/31 10:22:40 by malord           ###   ########.fr        #
+#    Updated: 2022/09/02 17:16:11 by malord           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,6 +25,7 @@ SRCS		=	ft_atoi.c				\
 				ft_isalpha.c			\
 				ft_isascii.c			\
 				ft_isdigit.c			\
+				ft_isint.c				\
 				ft_isprint.c			\
 				ft_itoa.c				\
 				ft_lstadd_back.c		\
