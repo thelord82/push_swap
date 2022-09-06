@@ -6,7 +6,7 @@
 /*   By: malord <malord@student.42quebec.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/22 15:06:30 by malord            #+#    #+#             */
-/*   Updated: 2022/09/02 17:36:00 by malord           ###   ########.fr       */
+/*   Updated: 2022/09/06 15:41:50 by malord           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,9 @@ void	check_limits(char **argv, int index)
 {
 	while (argv[index])
 	{
-		if (ft_atol(argv[index]) > INT_MAX || ft_atol(argv[index]) < INT_MIN)
+		if (((int)ft_strlen(argv[index]) > ft_numlen_base(INT_MIN, 10))
+			|| (ft_atol(argv[index]) < INT_MIN
+				|| ft_atol(argv[index]) > INT_MAX))
 		{
 			write(2, "Error\n", 6);
 			exit(0);
@@ -118,50 +120,46 @@ void	check_sorted(int	*numarray, int size)
 {
 	int	index;
 
-	index = 1;
+	index = 0;
 	int i = 0;
 	while (i < size)
 	{
-		printf("Valeur de numarray[%d] = : %d\n", i, numarray[i]);
+		//printf("Valeur de numarray[%d] = : %d\n", i, numarray[i]);
 		i++;
 	}
-	while (index < size && numarray[index + 1] != 0)
+	//printf("Valeur de size : %d\n", size);
+	while (index < size)
 	{
-		if ((numarray[index] > numarray[index - 1])
-			&& (numarray[index] < numarray[index + 1]))
+		if (numarray[index] < numarray[index + 1])
 		{
 			index++;
-			if (numarray[index + 1] == 0)
-				printf("This is already sorted cockhead!\n");
+			if (index == size - 1)
+			{
+				//printf("This is already sorted cockhead!\n");
+				exit (0);
+			}
 		}
 		else
 		{
-			printf("This is not sorted you fuck\n");
+			//printf("This is not sorted you fuck\n");
 			break ;
 		}
 	}
 }
 
-int	*convert_to_int(char **array, int index)
+int	*convert_to_int(char **array, int index, int position)
 {
 	int	*converted;
-	int	i;
 
-	i = 0;
 	converted = ft_calloc(index, sizeof(int));
 	index = 0;
-	if (ft_isint(ft_atoi(array[0])) == 0)
+	//printf("Valeur position : %d\n", position);
+	//printf("contenu de l'array : %s\n", array[position]);
+	while (array[position])
 	{
-		printf("Chu rentrer\n");
-		i = 1;
-	}
-	printf("Valeur i : %d\n", i);
-	printf("contenu de l'array : %s\n", array[i]);
-	while (array[i])
-	{
-		converted[index] = ft_atoi(array[i]);
+		converted[index] = ft_atoi(array[position]);
 		index++;
-		i++;
+		position++;
 	}
 	return (converted);
 }
@@ -176,16 +174,16 @@ void	check_split(char **argv)
 	quoted_args = ft_split(argv[1], ' ');
 	while (quoted_args[i])
 	{
-		printf("Valeur de quoted_args[%d] = %s\n", i, quoted_args[i]);
+		//printf("Valeur de quoted_args[%d] = %s\n", i, quoted_args[i]);
 		i++;
 	}
 	if (i >= 1)
 	{
 		check_errors(quoted_args, 0);
-		converted = convert_to_int(quoted_args, i);
-		printf("valeur de converted[0] = %d\n", converted[0]);
+		converted = convert_to_int(quoted_args, i, 0);
+		/*printf("valeur de converted[0] = %d\n", converted[0]);
 		printf("valeur de converted[1] = %d\n", converted[1]);
-		printf("valeur de converted[2] = %d\n", converted[2]);
+		printf("valeur de converted[2] = %d\n", converted[2]);*/
 		check_sorted(converted, i);
 	}
 }
@@ -193,17 +191,16 @@ void	check_split(char **argv)
 int	main(int argc, char **argv)
 {
 	int	*converted;
+	int	position;
 
+	position = 1;
 	if (argc == 2)
 		check_split(argv);
 	else if (argc > 2)
 	{
-		converted = convert_to_int(argv, argc - 1);
-		printf("valeur de converted[0] = %d\n", converted[0]);
-		printf("valeur de converted[1] = %d\n", converted[1]);
-		printf("valeur de converted[2] = %d\n", converted[2]);
-		check_sorted(converted, argc - 1);
 		check_errors(argv, 1);
+		converted = convert_to_int(argv, argc - 1, position);
+		check_sorted(converted, argc - 1);
 	}
 	exit (0);
 }
