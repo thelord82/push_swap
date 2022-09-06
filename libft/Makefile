@@ -6,7 +6,7 @@
 #    By: malord <malord@student.42quebec.com>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/30 09:39:10 by malord            #+#    #+#              #
-#    Updated: 2022/09/02 17:16:11 by malord           ###   ########.fr        #
+#    Updated: 2022/09/06 15:40:07 by malord           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -42,6 +42,7 @@ SRCS		=	ft_atoi.c				\
 				ft_memcpy.c				\
 				ft_memmove.c			\
 				ft_memset.c				\
+				ft_numlen_base.c		\
 				ft_putchar_fd.c			\
 				ft_putendl_fd.c			\
 				ft_putnbr_fd.c			\
