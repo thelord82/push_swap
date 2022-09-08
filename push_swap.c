@@ -6,53 +6,17 @@
 /*   By: malord <malord@student.42quebec.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/22 15:06:30 by malord            #+#    #+#             */
-/*   Updated: 2022/09/06 15:41:50 by malord           ###   ########.fr       */
+/*   Updated: 2022/09/08 15:49:24 by malord           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-/*int	main(int argc, char **argv)
-{
-	t_stack	*stack_a;
-	t_stack	*head;
-	t_stack	*tmp_node;
-	int		i;
-	int		tmp;
-
-	i = 1;
-	stack_a = ft_calloc(sizeof(t_list), 1);
-	head = stack_a;
-	if (argc > 1)
-	{
-		while (argv[i])
-		{
-			tmp = ft_atoi(argv[i]);
-			stack_a->nb = tmp;
-			i++;
-			if (argv[i] != NULL)
-			{
-				tmp_node = ft_calloc(sizeof(t_list), 1);
-				stack_a->next = tmp_node;
-				stack_a = stack_a->next;
-			}
-		}
-		stack_a = head;
-		stack_a = sort_list(stack_a, ascending);
-		i = 0;
-		while (stack_a)
-		{
-			printf("Element %d : %d\n", i, stack_a->nb);
-			stack_a = stack_a->next;
-			i++;
-		}
-	}
-}*/
 void	check_limits(char **argv, int index)
 {
 	while (argv[index])
 	{
-		if (((int)ft_strlen(argv[index]) > ft_numlen_base(INT_MIN, 10))
+		if (((int)ft_strlen(argv[index]) > 11)
 			|| (ft_atol(argv[index]) < INT_MIN
 				|| ft_atol(argv[index]) > INT_MAX))
 		{
@@ -116,116 +80,110 @@ void	check_errors(char **argv, int index)
 	check_numbers(argv, index);
 }
 
-void	check_sorted(int	*numarray, int size)
+void	check_sorted(t_stack *stack_a, int size)
 {
 	int	index;
 
 	index = 0;
-	int i = 0;
-	while (i < size)
-	{
-		//printf("Valeur de numarray[%d] = : %d\n", i, numarray[i]);
-		i++;
-	}
-	//printf("Valeur de size : %d\n", size);
 	while (index < size)
 	{
-		if (numarray[index] < numarray[index + 1])
+		if (stack_a->nb < stack_a->next->nb)
 		{
+			stack_a = stack_a->next;
 			index++;
 			if (index == size - 1)
 			{
-				//printf("This is already sorted cockhead!\n");
+				printf("This is already sorted cockhead!\n");
 				exit (0);
 			}
 		}
 		else
 		{
-			//printf("This is not sorted you fuck\n");
+			printf("This is not sorted you fuck\n");
 			break ;
 		}
 	}
 }
 
-int	*convert_to_int(char **array, int index, int position)
+void	to_int_list(char **array, int position, t_stack *stack_a)
 {
-	int	*converted;
-
-	converted = ft_calloc(index, sizeof(int));
-	index = 0;
-	//printf("Valeur position : %d\n", position);
-	//printf("contenu de l'array : %s\n", array[position]);
 	while (array[position])
 	{
-		converted[index] = ft_atoi(array[position]);
-		index++;
+		stack_a->nb = ft_atoi(array[position]);
+		stack_a->next = ft_calloc(sizeof(t_stack), 1);
+		if (!stack_a->next)
+			exit (0);
+		stack_a = stack_a->next;
 		position++;
 	}
-	return (converted);
 }
 
-void	check_split(char **argv)
+void	check_split(char **argv, t_stack *stack_a)
 {
-	char	**quoted_args;
-	int		i;
-	int		*converted;
+	stack_a->quoted_args = ft_split(argv[1], ' ');
+	check_errors(stack_a->quoted_args, 0);
+	to_int_list(stack_a->quoted_args, 0, stack_a);
+	check_sorted(stack_a, lst_size(stack_a));
+}
 
-	i = 0;
-	quoted_args = ft_split(argv[1], ' ');
-	while (quoted_args[i])
+int	lst_size(t_stack *stack_a)
+{
+	t_stack	*list;
+	int		size;
+
+	list = stack_a;
+	size = 0;
+	while (list->next != NULL)
 	{
-		//printf("Valeur de quoted_args[%d] = %s\n", i, quoted_args[i]);
-		i++;
+		size++;
+		list = list->next;
 	}
-	if (i >= 1)
+	return (size);
+}
+
+void	index_list(t_stack *stack_a)
+{
+	t_stack	*head;
+	t_stack	*compared;
+
+	head = stack_a;
+	while (head->next != NULL)
 	{
-		check_errors(quoted_args, 0);
-		converted = convert_to_int(quoted_args, i, 0);
-		/*printf("valeur de converted[0] = %d\n", converted[0]);
-		printf("valeur de converted[1] = %d\n", converted[1]);
-		printf("valeur de converted[2] = %d\n", converted[2]);*/
-		check_sorted(converted, i);
+		compared = stack_a;
+		while (compared->next != NULL)
+		{
+			if (compared->nb <= head->nb)
+				head->index++;;
+			compared = compared->next;
+		}
+		head = head->next;
 	}
 }
 
 int	main(int argc, char **argv)
 {
-	int	*converted;
-	int	position;
+	int		position;
+	t_stack	*stack_a;
+	t_stack	*head;
 
+	stack_a = ft_calloc(sizeof(t_stack), 1);
+	if (!stack_a)
+		exit (0);
+	head = stack_a;
 	position = 1;
 	if (argc == 2)
-		check_split(argv);
+		check_split(argv, stack_a);
 	else if (argc > 2)
 	{
 		check_errors(argv, 1);
-		converted = convert_to_int(argv, argc - 1, position);
-		check_sorted(converted, argc - 1);
+		to_int_list(argv, position, stack_a);
+		check_sorted(stack_a, argc - 1);
 	}
-	exit (0);
-}
-
-/*int	main(int argc, char **argv)
-{
-	int	*stack_a;
-	int	i;
-	int	j;
-
-	i = 1;
-	j = 0;
-	stack_a = ft_calloc((argc - 1), sizeof(int));
-	while (argv[i])
+	index_list(stack_a);
+	while (stack_a->next != NULL)
 	{
-		stack_a[j] = ft_atoi(argv[i]);
-		i++;
-		j++;
-	}
-	i = 0;
-	sort_int_tab(stack_a, (argc - 1));
-	while (stack_a[i])
-	{
-		printf("Element %d : %d\n", i, stack_a[i]);
-		i++;
+		printf("stack_a->nb = %d | stack_a->index = %d\n", stack_a->nb, stack_a->index);
+		stack_a = stack_a->next;
 	}
 	return (0);
-}*/
+}
