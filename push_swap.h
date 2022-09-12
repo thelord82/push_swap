@@ -6,7 +6,7 @@
 /*   By: malord <malord@student.42quebec.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/22 15:07:10 by malord            #+#    #+#             */
-/*   Updated: 2022/09/08 10:38:07 by malord           ###   ########.fr       */
+/*   Updated: 2022/09/12 15:15:02 by malord           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ typedef struct s_stacklist {
 
 void	check_split(char **argv, t_stack *stack_a);
 void	to_int_list(char **array, int position, t_stack *stack_a);
-void	check_sorted(t_stack *stack_a, int size);
+int		check_sorted(t_stack *stack_a, int size);
 void	check_errors(char **argv, int index);
 void	check_numbers(char **argv, int index);
 void	check_doubles(char **argv, int index);
