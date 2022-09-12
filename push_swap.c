@@ -6,7 +6,7 @@
 /*   By: malord <malord@student.42quebec.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/22 15:06:30 by malord            #+#    #+#             */
-/*   Updated: 2022/09/12 16:51:15 by malord           ###   ########.fr       */
+/*   Updated: 2022/09/12 16:53:53 by malord           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -205,7 +205,7 @@ void	do_rra(t_stack *stack_a)
 	}
 }
 
-void	sort_three(t_stack *stack_a)
+void	sort_three(t_stack *stack_a) // Verifier le print si au bon endroit ? Correct d'appeler les fonctions de moves entre eux? Ce sont des moves ou non? 
 {
 	t_stack *head;
 
