@@ -6,7 +6,7 @@
 /*   By: malord <malord@student.42quebec.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/22 15:06:30 by malord            #+#    #+#             */
-/*   Updated: 2022/09/15 11:49:38 by malord           ###   ########.fr       */
+/*   Updated: 2022/09/15 15:59:56 by malord           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -223,7 +223,7 @@ void	do_ra(t_stack **stack_a)
 
 	new_head = (*stack_a)->next;
 	lst_addback(stack_a);
-	stack_a = &new_head;
+	*stack_a = new_head;
 	printf("ra\n");
 	//return (stack_a);
 }
@@ -249,8 +249,8 @@ void	do_rra(t_stack **stack_a)
 		i++;
 	}
 	temp_head->next = NULL;
+	*stack_a = new_head;
 	printf("rra\n");
-	//return (new_head);
 }
 
 void	sort_three(t_stack **stack_a)
@@ -258,16 +258,32 @@ void	sort_three(t_stack **stack_a)
 	t_stack *head;
 
 	head = *stack_a;
-	while (check_sorted(head, lst_size(head)) != 1)
+	/*while (check_sorted(head, lst_size(head)) != 1)
 	{
 		if (head->index > head->next->index && head->index > head->next->next->index)
-			do_ra(&head);
+		{
+			//do_ra(&head);
+			stack_a = &head;
+			do_ra(stack_a);
+		}
 		else if (head->next->index > head->index && head->next->index > head->next->next->index)
 			do_rra(&head);
 		else if (head->index > head->next->index)
 			do_sa(&head);
+	}*/
+	int i = 0;
+	while (i < 2)
+	//while (check_sorted(head, lst_size(head) != 1))
+	{
+		//*stack_a = head;
+		if ((*stack_a)->index > (*stack_a)->next->index && (*stack_a)->index > (*stack_a)->next->next->index)
+			do_ra(stack_a);
+		else if ((*stack_a)->next->index > (*stack_a)->index && (*stack_a)->next->index > (*stack_a)->next->next->index)
+			do_rra(stack_a);
+		else if ((*stack_a)->index > (*stack_a)->next->index)
+			do_sa(stack_a);
+		i++;
 	}
-	//return (head);
 }
 
 void	do_pb(t_stack **stack_a, t_stack **stack_b)
@@ -367,11 +383,11 @@ int	main(int argc, char **argv)
 		}
 		stack_a = head;
 		printf("-----------------\n");
-		/*while (stack_a != NULL)
+		while (stack_a != NULL)
 		{
 			printf("stack_a->nb = %d | stack_a->index = %d\n", stack_a->nb, stack_a->index);
 			stack_a = stack_a->next;
-		}*/
+		}
 	}
 	return (0);
 }
