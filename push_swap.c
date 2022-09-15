@@ -6,47 +6,47 @@
 /*   By: malord <malord@student.42quebec.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/22 15:06:30 by malord            #+#    #+#             */
-/*   Updated: 2022/09/13 16:45:44 by malord           ###   ########.fr       */
+/*   Updated: 2022/09/15 10:12:59 by malord           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void	check_limits(char **argv, int index)
+void	check_doubles(t_stack *stack_a)
 {
-	while (argv[index])
+	t_stack	*tmp;
+	t_stack	*head;
+
+	head = stack_a;
+	while (stack_a != NULL)
 	{
-		if (((int)ft_strlen(argv[index]) > 11)
-			|| (ft_atol(argv[index]) < INT_MIN
-				|| ft_atol(argv[index]) > INT_MAX))
+		tmp = head;
+		while (tmp != NULL)
 		{
-			write(2, "Error\n", 6);
-			exit(0);
+			if (stack_a->nb == tmp->nb && stack_a != tmp)
+			{
+				write (2, "Error\n", 6);
+				exit(0);
+			}
+			else
+				tmp = tmp->next;
 		}
-		else
-			index++;
+		stack_a = stack_a->next;
 	}
 }
 
-void	check_doubles(char **argv, int index)
+void	check_limits(t_stack *stack_a)
 {
-	int	j;
-
-	j = 1;
-	while (argv[j])
+	while (stack_a != NULL)
 	{
-		index = 0;
-		while (argv[index])
+		if (ft_numlen_base(stack_a->nb, 10) > 11
+			|| stack_a->nb < INT_MIN || stack_a->nb > INT_MAX)
 		{
-			if (ft_strcmp(argv[index], argv[j]) == 0 && index != j)
-			{
-				write (2, "Error\n", 6);
-				exit (0);
-			}
-			else
-				index++;
+			write (2, "Error\n", 6);
+			exit(0);
 		}
-		j++;
+		else
+			stack_a = stack_a->next;
 	}
 }
 
@@ -73,12 +73,12 @@ void	check_numbers(char **argv, int index)
 	}
 }
 
-void	check_errors(char **argv, int index)
+/*void	check_errors(char **argv, int index)
 {
 	check_limits(argv, index);
 	check_doubles(argv, index);
 	check_numbers(argv, index);
-}
+}*/
 
 int		check_sorted(t_stack *stack_a, int size)
 {
@@ -111,7 +111,7 @@ void	to_int_list(char **array, int position, t_stack *stack_a)
 {
 	while (array[position])
 	{
-		stack_a->nb = ft_atoi(array[position]);
+		stack_a->nb = ft_atol(array[position]);
 		if (array[position + 1] != NULL)
 			stack_a->next = ft_calloc(sizeof(t_stack), 1);
 		else
@@ -126,8 +126,10 @@ void	to_int_list(char **array, int position, t_stack *stack_a)
 void	check_split(char **argv, t_stack *stack_a)
 {
 	stack_a->quoted_args = ft_split(argv[1], ' ');
-	check_errors(stack_a->quoted_args, 0);
+	check_numbers(stack_a->quoted_args, 0);
 	to_int_list(stack_a->quoted_args, 0, stack_a);
+	check_limits(stack_a);
+	check_doubles(stack_a);
 	check_sorted(stack_a, lst_size(stack_a));
 }
 
@@ -251,7 +253,7 @@ t_stack *do_rra(t_stack *stack_a)
 	return (new_head);
 }
 
-t_stack	*sort_three(t_stack *stack_a) // Verifier le print si au bon endroit ? Correct d'appeler les fonctions de moves entre eux? Ce sont des moves ou non? 
+t_stack	*sort_three(t_stack *stack_a)
 {
 	t_stack *head;
 
@@ -268,27 +270,63 @@ t_stack	*sort_three(t_stack *stack_a) // Verifier le print si au bon endroit ? C
 	return (head);
 }
 
+t_stack	*push_b_below_median(t_stack *stack_a, t_stack *stack_b)
+{
+	t_stack	*tmp;
+	int		size;
+	int		median;
+	int		i;
+
+	size = lst_size(stack_a);
+	i = 0;
+	if (size % 2 == 0)
+		median = size / 2;
+	else
+		median = (size / 2) + 1;
+	while (i < size)
+	{
+		if (stack_a->index <= median)
+		{
+			tmp = stack_a;
+			stack_a = stack_a->next;
+			tmp->next = stack_b;
+			stack_b = tmp;
+			printf("pb\n");
+		}
+		else
+			stack_a = stack_a->next;
+		i++;
+	}
+	return (stack_b);
+}
+
 int	main(int argc, char **argv)
 {
 	int		position;
 	t_stack	*stack_a;
+	t_stack	*stack_b;
 	t_stack	*head;
 	t_stack	*result;
 
 	stack_a = ft_calloc(sizeof(t_stack), 1);
+	stack_b = NULL;
 	head = stack_a;
 	if (!stack_a)
 		exit (0);
 	position = 1;
-	if (argc == 2)
+	if (argc == 2 && ft_strlen(argv[1]) > 1)
 		check_split(argv, stack_a);
 	else if (argc > 2)
 	{
-		check_errors(argv, 1);
+		check_numbers(argv, 1);
 		to_int_list(argv, position, stack_a);
+		check_limits(stack_a);
+		check_doubles(stack_a);
 		check_sorted(stack_a, argc - 1);
 	}
 	index_list(stack_a);
+
+	// PRINT TESTS 
 	while (stack_a != NULL)
 	{
 		printf("stack_a->nb = %d | stack_a->index = %d\n", stack_a->nb, stack_a->index);
@@ -296,11 +334,31 @@ int	main(int argc, char **argv)
 	}
 	printf("--------\n");
 	stack_a = head;
-	result = sort_three(stack_a);
-	while (result != NULL)
+	if (lst_size(stack_a) == 3)
 	{
-		printf("stack_a->nb = %d | stack_a->index = %d\n", result->nb, result->index);
-		result = result->next;
+		result = sort_three(stack_a);
+		while (result != NULL)
+		{
+			printf("stack_a->nb = %d | stack_a->index = %d\n", result->nb, result->index);
+			result = result->next;
+		}
+	}
+	else if (lst_size(stack_a) > 3)
+	{
+		stack_b = push_b_below_median(stack_a, stack_b);
+		printf("Plus que 3 connard\n");
+		printf("-----------------\n");
+		while (stack_b != NULL)
+		{
+			printf("stack_b->nb = %d | stack_b->index = %d\n", stack_b->nb, stack_b->index);
+			stack_b = stack_b->next;
+		}
+		/*stack_a = push_b_below_median(stack_a, stack_b);
+		while (stack_a != NULL)
+		{
+			printf("stack_a->nb = %d | stack_a->index = %d\n", stack_a->nb, stack_a->index);
+			stack_a = stack_a->next;
+		}*/
 	}
 	return (0);
 }
