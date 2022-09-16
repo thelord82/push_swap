@@ -6,7 +6,7 @@
 /*   By: malord <malord@student.42quebec.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/22 15:06:30 by malord            #+#    #+#             */
-/*   Updated: 2022/09/15 15:59:56 by malord           ###   ########.fr       */
+/*   Updated: 2022/09/16 09:48:05 by malord           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -255,9 +255,12 @@ void	do_rra(t_stack **stack_a)
 
 void	sort_three(t_stack **stack_a)
 {
-	t_stack *head;
+	int	i;
 
-	head = *stack_a;
+	i = 0;
+	//t_stack *head;
+
+	//head = *stack_a;
 	/*while (check_sorted(head, lst_size(head)) != 1)
 	{
 		if (head->index > head->next->index && head->index > head->next->next->index)
@@ -271,11 +274,8 @@ void	sort_three(t_stack **stack_a)
 		else if (head->index > head->next->index)
 			do_sa(&head);
 	}*/
-	int i = 0;
 	while (i < 2)
-	//while (check_sorted(head, lst_size(head) != 1))
 	{
-		//*stack_a = head;
 		if ((*stack_a)->index > (*stack_a)->next->index && (*stack_a)->index > (*stack_a)->next->next->index)
 			do_ra(stack_a);
 		else if ((*stack_a)->next->index > (*stack_a)->index && (*stack_a)->next->index > (*stack_a)->next->next->index)
@@ -297,35 +297,42 @@ void	do_pb(t_stack **stack_a, t_stack **stack_b)
 	printf("pb\n");
 }
 
-void	push_b_below_median(t_stack **stack_a, t_stack **stack_b)
+int		find_median(int size)
 {
-	//t_stack	*head;
-	int		size;
-	int		median;
-	int		i;
+	int	median;
 
-	//head = NULL;
-	size = lst_size(*stack_a);
-	i = 0;
 	if (size % 2 == 0)
 		median = size / 2;
 	else
 		median = (size / 2) + 1;
+	return (median);
+}
+
+void	push_b_below_median(t_stack **stack_a, t_stack **stack_b)
+{
+	t_stack	*head;
+	int		size;
+	int		median;
+	int		i;
+
+	head = NULL;
+	size = lst_size(*stack_a);
+	i = 0;
+	median = find_median(size);
 	while (i < size)
 	{
-		if ((*stack_a)->index <= median)
+		if ((*stack_a)->index < median)
 			do_pb(stack_a, stack_b);
 		else
 		{
-			/*if (head == NULL)
-				head = *stack_a;*/
-			*stack_a = (*stack_a)->next;
-			//head->next = *stack_a;
+			if (head == NULL)
+				head = *stack_a;
+			do_ra(stack_a);
 		}
 		i++;
 	}
-	//*stack_a = head;
-	//return (stack_b);
+	if ((*stack_a) == NULL)
+		*stack_a = head;
 }
 
 int	main(int argc, char **argv)
@@ -334,7 +341,6 @@ int	main(int argc, char **argv)
 	t_stack	*stack_a;
 	t_stack	*stack_b;
 	t_stack	*head;
-	//t_stack	*result;
 
 	stack_a = ft_calloc(sizeof(t_stack), 1);
 	stack_b = NULL;
@@ -373,16 +379,28 @@ int	main(int argc, char **argv)
 	}
 	else if (lst_size(stack_a) > 3)
 	{
-		push_b_below_median(&stack_a, &stack_b);
 		printf("Plus que 3 connard\n");
-		printf("-----------------\n");
+		push_b_below_median(&stack_a, &stack_b);
+		/*printf("-----------------\n");
 		while (stack_b != NULL)
 		{
 			printf("stack_b->nb = %d | stack_b->index = %d\n", stack_b->nb, stack_b->index);
 			stack_b = stack_b->next;
 		}
-		stack_a = head;
 		printf("-----------------\n");
+		while (stack_a != NULL)
+		{
+			printf("stack_a->nb = %d | stack_a->index = %d\n", stack_a->nb, stack_a->index);
+			stack_a = stack_a->next;
+		}*/
+		int i = 0;
+		int list_size = lst_size(stack_a) - 3;
+		printf("Taille de liste A apres 1er push_b : %d\n", list_size);
+		while (i < list_size)
+		{
+			do_pb(&stack_a, &stack_b);
+			i++;
+		}
 		while (stack_a != NULL)
 		{
 			printf("stack_a->nb = %d | stack_a->index = %d\n", stack_a->nb, stack_a->index);
