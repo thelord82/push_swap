@@ -6,7 +6,7 @@
 /*   By: malord <malord@student.42quebec.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/22 15:06:30 by malord            #+#    #+#             */
-/*   Updated: 2022/09/16 09:48:05 by malord           ###   ########.fr       */
+/*   Updated: 2022/09/19 11:43:19 by malord           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -335,6 +335,32 @@ void	push_b_below_median(t_stack **stack_a, t_stack **stack_b)
 		*stack_a = head;
 }
 
+void	position_stacks(t_stack **stack_a, t_stack **stack_b)
+{
+	t_stack	*head_a;
+	t_stack	*head_b;
+	int		position;
+
+	head_a = *stack_a;
+	head_b = *stack_b;
+	head_a->position = 0;
+	head_b->position = 0;
+	position = 0;
+	while (head_a != NULL)
+	{
+		position++;
+		head_a->position = position;
+		head_a = head_a->next;
+	}
+	position = 0;
+	while (head_b != NULL)
+	{
+		position++;
+		head_b->position = position;
+		head_b = head_b->next;
+	}
+}
+
 int	main(int argc, char **argv)
 {
 	int		position;
@@ -381,29 +407,25 @@ int	main(int argc, char **argv)
 	{
 		printf("Plus que 3 connard\n");
 		push_b_below_median(&stack_a, &stack_b);
-		/*printf("-----------------\n");
-		while (stack_b != NULL)
-		{
-			printf("stack_b->nb = %d | stack_b->index = %d\n", stack_b->nb, stack_b->index);
-			stack_b = stack_b->next;
-		}
 		printf("-----------------\n");
-		while (stack_a != NULL)
-		{
-			printf("stack_a->nb = %d | stack_a->index = %d\n", stack_a->nb, stack_a->index);
-			stack_a = stack_a->next;
-		}*/
 		int i = 0;
 		int list_size = lst_size(stack_a) - 3;
-		printf("Taille de liste A apres 1er push_b : %d\n", list_size);
+		printf("Moves vers stack_b restant pour garder 3 dans stack_a : %d\n", list_size);
 		while (i < list_size)
 		{
 			do_pb(&stack_a, &stack_b);
 			i++;
 		}
+		position_stacks(&stack_a, &stack_b);
+		while (stack_b != NULL)
+		{
+			printf("stack_b->nb = %d | stack_b->index = %d | stack_b->position = %d\n", stack_b->nb, stack_b->index, stack_b->position);
+			stack_b = stack_b->next;
+		}
+		printf("-----------------\n");
 		while (stack_a != NULL)
 		{
-			printf("stack_a->nb = %d | stack_a->index = %d\n", stack_a->nb, stack_a->index);
+			printf("stack_a->nb = %d | stack_a->index = %d | stack_a->position = %d\n", stack_a->nb, stack_a->index, stack_a->position);
 			stack_a = stack_a->next;
 		}
 	}
