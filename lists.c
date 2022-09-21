@@ -6,7 +6,7 @@
 /*   By: malord <malord@student.42quebec.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 16:26:31 by malord            #+#    #+#             */
-/*   Updated: 2022/09/20 16:27:45 by malord           ###   ########.fr       */
+/*   Updated: 2022/09/21 16:13:03 by malord           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,8 +71,6 @@ t_stack	*lst_last(t_stack *stack_a)
 	head = stack_a;
 	while (i < lst_size(head) - 1)
 	{
-		//if (stack_a->next == NULL)
-			//return (stack_a);
 		stack_a = stack_a->next;
 		i++;
 	}

@@ -6,20 +6,11 @@
 /*   By: malord <malord@student.42quebec.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/22 15:06:30 by malord            #+#    #+#             */
-/*   Updated: 2022/09/20 16:31:49 by malord           ###   ########.fr       */
+/*   Updated: 2022/09/21 16:11:22 by malord           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
-
-void	lst_addfront(t_stack *stack_a, t_stack *to_add)
-{
-	t_stack	*new_head;
-
-	new_head = to_add;
-	new_head->next = stack_a;
-	stack_a = new_head;
-}
 
 void	sort_three(t_stack **stack_a)
 {
@@ -40,38 +31,67 @@ void	sort_three(t_stack **stack_a)
 	}
 }
 
-int		find_median(int size)
+void	shift_stack(t_stack **stack_a)
 {
-	int	median;
+	int	lowest_pos;
+	int	stack_size;
 
-	if (size % 2 == 0)
-		median = size / 2;
+	stack_size = lst_size(*stack_a);
+	lowest_pos = get_lowest_index_position(stack_a);
+	if (lowest_pos > stack_size / 2)
+	{
+		while (lowest_pos < stack_size)
+		{
+			do_rra(stack_a);
+			lowest_pos++;
+		}
+	}
 	else
-		median = (size / 2) + 1;
-	return (median);
+	{
+		while (lowest_pos > 0)
+		{
+			do_ra(stack_a);
+			lowest_pos--;
+		}
+	}
 }
 
-void	position_stacks(t_stack **stack_a, t_stack **stack_b)
+void	sort(t_stack **stack_a, t_stack **stack_b)
 {
-	t_stack	*head_a;
-	t_stack	*head_b;
-	int		position;
-
-	head_a = *stack_a;
-	head_b = *stack_b;
-	position = 0;
-	while (head_a != NULL)
+	push_b_below_median(stack_a, stack_b);
+	sort_three(stack_a);
+	while (*stack_b)
 	{
-		position++;
-		head_a->position = position;
-		head_a = head_a->next;
+		get_target_position(stack_a, stack_b);
+		get_cost(stack_a, stack_b);
+		do_cheapest_move(stack_a, stack_b);
 	}
-	position = 0;
-	while (head_b != NULL)
+	if (!check_sorted((*stack_a), lst_size(*stack_a)))
+		shift_stack(stack_a);
+}
+
+void	push_swap(t_stack **stack_a, t_stack **stack_b)
+{
+	int	i;
+	int	list_size;
+
+	i = 0;
+	if (lst_size(*stack_a) == 2)
+		do_sa(stack_a);
+	else if (lst_size(*stack_a) == 3)
+		sort_three(stack_a);
+	else
 	{
-		position++;
-		head_b->position = position;
-		head_b = head_b->next;
+		push_b_below_median(stack_a, stack_b);
+		list_size = lst_size(*stack_a) - 3;
+		while (i < list_size)
+		{
+			do_pb(stack_a, stack_b);
+			i++;
+		}
+		position_stacks(stack_a, stack_b);
+		get_cost(stack_a, stack_b);
+		sort(stack_a, stack_b);
 	}
 }
 
@@ -80,11 +100,9 @@ int	main(int argc, char **argv)
 	int		position;
 	t_stack	*stack_a;
 	t_stack	*stack_b;
-	t_stack	*head;
 
 	stack_a = ft_calloc(sizeof(t_stack), 1);
 	stack_b = NULL;
-	head = stack_a;
 	if (!stack_a)
 		exit (0);
 	position = 1;
@@ -99,50 +117,7 @@ int	main(int argc, char **argv)
 		check_sorted(stack_a, argc - 1);
 	}
 	index_list(stack_a);
-
-	// PRINT TESTS 
-	while (stack_a != NULL)
-	{
-		printf("stack_a->nb = %d | stack_a->index = %d\n", stack_a->nb, stack_a->index);
-		stack_a = stack_a->next;
-	}
-	printf("--------\n");
-	stack_a = head;
-	if (lst_size(stack_a) == 3)
-	{
-		sort_three(&stack_a);
-		while (stack_a != NULL)
-		{
-			printf("stack_a->nb = %d | stack_a->index = %d\n", stack_a->nb, stack_a->index);
-			stack_a = stack_a->next;
-		}
-	}
-	else if (lst_size(stack_a) > 3)
-	{
-		printf("Plus que 3 connard\n");
-		push_b_below_median(&stack_a, &stack_b);
-		printf("-----------------\n");
-		int i = 0;
-		int list_size = lst_size(stack_a) - 3;
-		printf("Moves vers stack_b restant pour garder 3 dans stack_a : %d\n", list_size);
-		while (i < list_size)
-		{
-			do_pb(&stack_a, &stack_b);
-			i++;
-		}
-		position_stacks(&stack_a, &stack_b);
-		while (stack_b != NULL)
-		{
-			printf("stack_b->nb = %d | stack_b->index = %d | stack_b->position = %d\n", stack_b->nb, stack_b->index, stack_b->position);
-			stack_b = stack_b->next;
-		}
-		printf("-----------------\n");
-		
-		while (stack_a != NULL)
-		{
-			printf("stack_a->nb = %d | stack_a->index = %d | stack_a->position = %d\n", stack_a->nb, stack_a->index, stack_a->position);
-			stack_a = stack_a->next;
-		}
-	}
+	push_swap(&stack_a, &stack_b);
+	free_stack(stack_a);
 	return (0);
 }

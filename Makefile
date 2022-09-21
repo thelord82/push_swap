@@ -6,7 +6,7 @@
 #    By: malord <malord@student.42quebec.com>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/20 10:07:57 by malord            #+#    #+#              #
-#    Updated: 2022/09/20 16:31:21 by malord           ###   ########.fr        #
+#    Updated: 2022/09/21 16:00:14 by malord           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,13 +17,17 @@ CC			=	gcc
 CFLAGS		=	-Wall -Werror -Wextra
 RM			=	rm -f
 
-SRCS		=	push_swap.c		\
-				swaps.c			\
-				rotations.c		\
-				rev_rotations.c	\
-				errors.c		\
-				lists.c			\
-				push_moves.c
+SRCS		=	push_swap.c			\
+				swaps.c				\
+				rotations.c			\
+				rev_rotations.c		\
+				errors.c			\
+				lists.c				\
+				push_moves.c		\
+				moves_with_cost.c	\
+				utils.c				\
+				targets.c			\
+				positioning.c
 
 OBJS		= 	${SRCS:.c=.o}
 

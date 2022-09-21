@@ -6,7 +6,7 @@
 /*   By: malord <malord@student.42quebec.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/22 15:07:10 by malord            #+#    #+#             */
-/*   Updated: 2022/09/20 16:33:08 by malord           ###   ########.fr       */
+/*   Updated: 2022/09/21 16:01:04 by malord           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,5 +54,21 @@ void	do_pb(t_stack **stack_a, t_stack **stack_b);
 void	do_pa(t_stack **stack_a, t_stack **stack_b);
 void	push_b_below_median(t_stack **stack_a, t_stack **stack_b);
 int		find_median(int size);
+void	do_rev_rotate_both(t_stack **a, t_stack **b, int *cost_a, int *cost_b);
+void	do_rotate_both(t_stack **a, t_stack **b, int *cost_a, int *cost_b);
+void	do_rotate_a(t_stack **a, int *cost);
+void	do_rotate_b(t_stack **b, int *cost);
+void	free_stack(t_stack *stack_a);
+int	nb_abs(int nb);
+int	find_median(int size);
+int	get_target(t_stack **a, int b_idx, int target_idx, int target_pos);
+void	get_target_position(t_stack **a, t_stack **b);
+void	do_cheapest_move(t_stack **stack_a, t_stack **stack_b);
+void	do_move(t_stack **a, t_stack **b, int cost_a, int cost_b);
+void	get_position(t_stack **stack_a);
+void	position_stacks(t_stack **stack_a, t_stack **stack_b);
+void	get_position(t_stack **stack_a);
+int	get_lowest_index_position(t_stack **stack);
+void	get_cost(t_stack **stack_a, t_stack **stack_b);
 
 #endif

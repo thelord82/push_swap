@@ -6,7 +6,7 @@
 /*   By: malord <malord@student.42quebec.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 16:18:01 by malord            #+#    #+#             */
-/*   Updated: 2022/09/20 16:19:35 by malord           ###   ########.fr       */
+/*   Updated: 2022/09/21 15:16:54 by malord           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,17 +85,10 @@ int	check_sorted(t_stack *stack_a, int size)
 			stack_a = stack_a->next;
 			index++;
 			if (index == size - 1)
-			{
-				printf("This is already sorted cockhead!\n");
-				return (1);
-				//exit (0);
-			}
+				exit (0);
 		}
 		else
-		{
-			printf("This is not sorted you fuck\n");
 			return (0);
-		}
 	}
 	return (0);
 }
