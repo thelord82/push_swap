@@ -6,7 +6,7 @@
 /*   By: malord <malord@student.42quebec.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 16:26:31 by malord            #+#    #+#             */
-/*   Updated: 2022/09/21 16:13:03 by malord           ###   ########.fr       */
+/*   Updated: 2022/09/21 16:18:15 by malord           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,6 @@ void	to_int_list(char **array, int position, t_stack *stack_a)
 			stack_a->next = ft_calloc(sizeof(t_stack), 1);
 		else
 			stack_a->next = NULL;
-		//if (!stack_a->next)
-			//exit (0);
 		stack_a = stack_a->next;
 		position++;
 	}
@@ -65,7 +63,7 @@ void	index_list(t_stack *stack_a)
 t_stack	*lst_last(t_stack *stack_a)
 {
 	t_stack	*head;
-	int	i;
+	int		i;
 
 	i = 0;
 	head = stack_a;
