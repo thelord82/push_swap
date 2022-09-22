@@ -6,7 +6,7 @@
 /*   By: malord <malord@student.42quebec.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/22 15:06:30 by malord            #+#    #+#             */
-/*   Updated: 2022/09/21 20:03:17 by malord           ###   ########.fr       */
+/*   Updated: 2022/09/22 15:57:02 by malord           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,9 @@ void	push_swap(t_stack **stack_a, t_stack **stack_b)
 	int	list_size;
 
 	i = 0;
-	if (lst_size(*stack_a) == 2)
+	if (lst_size(*stack_a) == 1)
+		exit(0);
+	else if (lst_size(*stack_a) == 2)
 		do_sa(stack_a);
 	else if (lst_size(*stack_a) == 3)
 		sort_three(stack_a);
@@ -100,18 +102,21 @@ int	main(int argc, char **argv)
 	t_stack	*stack_a;
 	t_stack	*stack_b;
 
-	stack_a = ft_calloc(sizeof(t_stack), 1);
+	stack_a = NULL;
 	stack_b = NULL;
-	if (!stack_a)
-		exit (0);
 	if (argc < 2)
-		return (0);
+	{
+		exit (0);
+	}
 	if (argc == 2)
-		check_split(argv, stack_a);
+		check_split(argv, &stack_a);
 	else if (argc > 2)
 	{
 		check_numbers(argv, 1);
 		check_limits(argv, 1);
+		stack_a = ft_calloc(sizeof(t_stack), 1);
+		if (!stack_a)
+			exit (0);
 		to_int_list(argv, 1, stack_a);
 		check_doubles(stack_a);
 		check_sorted(stack_a, argc - 1);

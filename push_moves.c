@@ -6,7 +6,7 @@
 /*   By: malord <malord@student.42quebec.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 16:31:04 by malord            #+#    #+#             */
-/*   Updated: 2022/09/20 16:32:19 by malord           ###   ########.fr       */
+/*   Updated: 2022/09/22 14:48:55 by malord           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,27 +36,22 @@ void	do_pa(t_stack **stack_a, t_stack **stack_b)
 
 void	push_b_below_median(t_stack **stack_a, t_stack **stack_b)
 {
-	t_stack	*head;
 	int		size;
 	int		median;
 	int		i;
 
-	head = NULL;
 	size = lst_size(*stack_a);
 	i = 0;
 	median = find_median(size);
-	while (i < size)
+	while (i < size && lst_size(*stack_a) > 3)
 	{
-		if ((*stack_a)->index < median)
+		if (lst_size(*stack_b) == 0
+			&& check_sorted(*stack_a, lst_size(*stack_a)) == 1)
+			break ;
+		if ((*stack_a)->index <= median)
 			do_pb(stack_a, stack_b);
 		else
-		{
-			if (head == NULL)
-				head = *stack_a;
 			do_ra(stack_a);
-		}
 		i++;
 	}
-	if ((*stack_a) == NULL)
-		*stack_a = head;
 }

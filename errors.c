@@ -6,7 +6,7 @@
 /*   By: malord <malord@student.42quebec.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 16:18:01 by malord            #+#    #+#             */
-/*   Updated: 2022/09/21 19:14:58 by malord           ###   ########.fr       */
+/*   Updated: 2022/09/22 16:19:52 by malord           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ void	check_doubles(t_stack *stack_a)
 			if (stack_a->nb == tmp->nb && stack_a != tmp)
 			{
 				write (2, "Error\n", 6);
+				free_stack(stack_a);
 				exit(0);
 			}
 			else
@@ -34,20 +35,6 @@ void	check_doubles(t_stack *stack_a)
 		stack_a = stack_a->next;
 	}
 }
-
-/*void	check_limits(t_stack *stack_a)
-{
-	while (stack_a != NULL)
-	{
-		if (stack_a->nb < INT_MIN || stack_a->nb > INT_MAX)
-		{
-			write (2, "Error\n", 6);
-			exit(0);
-		}
-		else
-			stack_a = stack_a->next;
-	}
-}*/
 
 void	check_limits(char **array, int position)
 {
@@ -80,6 +67,13 @@ void	check_numbers(char **argv, int index)
 			if (ft_isdigit(argv[index][j]) == 0)
 			{
 				write (2, "Error\n", 6);
+				j = 0;
+				while (argv[j])
+				{
+					free(argv[j]);
+					j++;
+				}
+				free(argv);
 				exit (0);
 			}
 			else
@@ -94,14 +88,22 @@ int	check_sorted(t_stack *stack_a, int size)
 	int	index;
 
 	index = 0;
+	if (size <= 1)
+	{
+		free(stack_a);
+		exit (0);
+	}
 	while (index < size)
 	{
-		if (stack_a->nb < stack_a->next->nb)
+		if (stack_a->next != NULL && stack_a->nb < stack_a->next->nb)
 		{
 			stack_a = stack_a->next;
 			index++;
 			if (index == size - 1)
-				exit (0);
+			{
+				free_stack(stack_a);
+				exit (1);
+			}
 		}
 		else
 			return (0);
@@ -109,12 +111,28 @@ int	check_sorted(t_stack *stack_a, int size)
 	return (0);
 }
 
-void	check_split(char **argv, t_stack *stack_a)
+void	check_split(char **argv, t_stack **stack_a)
 {
-	stack_a->quoted_args = ft_split(argv[1], ' ');
-	check_numbers(stack_a->quoted_args, 0);
-	check_limits(stack_a->quoted_args, 0);
-	to_int_list(stack_a->quoted_args, 0, stack_a);
-	check_doubles(stack_a);
-	check_sorted(stack_a, lst_size(stack_a));
+	char	**quoted_args;
+	int		i;
+
+	i = 0;
+	quoted_args = ft_split(argv[1], ' ');
+	if (quoted_args[0] == NULL)
+	{
+		free(quoted_args);
+		exit(0);
+	}
+	check_numbers(quoted_args, 0);
+	check_limits(quoted_args, 0);
+	*stack_a = ft_calloc(sizeof(t_stack), 1);
+	to_int_list(quoted_args, 0, *stack_a);
+	while (quoted_args[i])
+	{
+		free(quoted_args[i]);
+		i++;
+	}
+	free (quoted_args);
+	check_doubles(*stack_a);
+	check_sorted(*stack_a, lst_size(*stack_a));
 }
