@@ -6,7 +6,7 @@
 /*   By: malord <malord@student.42quebec.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 16:18:01 by malord            #+#    #+#             */
-/*   Updated: 2022/09/21 15:16:54 by malord           ###   ########.fr       */
+/*   Updated: 2022/09/21 19:14:58 by malord           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,12 +35,11 @@ void	check_doubles(t_stack *stack_a)
 	}
 }
 
-void	check_limits(t_stack *stack_a)
+/*void	check_limits(t_stack *stack_a)
 {
 	while (stack_a != NULL)
 	{
-		if (ft_numlen_base(stack_a->nb, 10) > 11
-			|| stack_a->nb < INT_MIN || stack_a->nb > INT_MAX)
+		if (stack_a->nb < INT_MIN || stack_a->nb > INT_MAX)
 		{
 			write (2, "Error\n", 6);
 			exit(0);
@@ -48,6 +47,23 @@ void	check_limits(t_stack *stack_a)
 		else
 			stack_a = stack_a->next;
 	}
+}*/
+
+void	check_limits(char **array, int position)
+{
+	while (array[position])
+	{
+		if (ft_strlen(array[position]) > 11
+			|| (ft_atol(array[position]) < INT_MIN)
+			|| (ft_atol(array[position]) > INT_MAX))
+		{
+			write(2, "Error\n", 6);
+			exit(0);
+		}
+		else
+			position++;
+	}
+
 }
 
 void	check_numbers(char **argv, int index)
@@ -97,8 +113,8 @@ void	check_split(char **argv, t_stack *stack_a)
 {
 	stack_a->quoted_args = ft_split(argv[1], ' ');
 	check_numbers(stack_a->quoted_args, 0);
+	check_limits(stack_a->quoted_args, 0);
 	to_int_list(stack_a->quoted_args, 0, stack_a);
-	check_limits(stack_a);
 	check_doubles(stack_a);
 	check_sorted(stack_a, lst_size(stack_a));
 }

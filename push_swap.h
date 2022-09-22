@@ -6,7 +6,7 @@
 /*   By: malord <malord@student.42quebec.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/22 15:07:10 by malord            #+#    #+#             */
-/*   Updated: 2022/09/21 18:51:46 by malord           ###   ########.fr       */
+/*   Updated: 2022/09/21 19:11:48 by malord           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int		check_sorted(t_stack *stack_a, int size);
 void	check_errors(char **argv, int index);
 void	check_numbers(char **argv, int index);
 void	check_doubles(t_stack *stack_a);
-void	check_limits(t_stack *stack_a);
+void	check_limits(char **array, int position);
 int		lst_size(t_stack *stack_a);
 void	swap(t_stack **stack_a);
 void	do_sa(t_stack **stack_a);

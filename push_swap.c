@@ -6,7 +6,7 @@
 /*   By: malord <malord@student.42quebec.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/22 15:06:30 by malord            #+#    #+#             */
-/*   Updated: 2022/09/21 16:11:22 by malord           ###   ########.fr       */
+/*   Updated: 2022/09/21 20:03:17 by malord           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,6 @@ void	push_swap(t_stack **stack_a, t_stack **stack_b)
 
 int	main(int argc, char **argv)
 {
-	int		position;
 	t_stack	*stack_a;
 	t_stack	*stack_b;
 
@@ -105,14 +104,15 @@ int	main(int argc, char **argv)
 	stack_b = NULL;
 	if (!stack_a)
 		exit (0);
-	position = 1;
-	if (argc == 2 && ft_strlen(argv[1]) > 1)
+	if (argc < 2)
+		return (0);
+	if (argc == 2)
 		check_split(argv, stack_a);
 	else if (argc > 2)
 	{
 		check_numbers(argv, 1);
-		to_int_list(argv, position, stack_a);
-		check_limits(stack_a);
+		check_limits(argv, 1);
+		to_int_list(argv, 1, stack_a);
 		check_doubles(stack_a);
 		check_sorted(stack_a, argc - 1);
 	}
