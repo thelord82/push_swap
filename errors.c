@@ -6,7 +6,7 @@
 /*   By: malord <malord@student.42quebec.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 16:18:01 by malord            #+#    #+#             */
-/*   Updated: 2022/09/22 16:19:52 by malord           ###   ########.fr       */
+/*   Updated: 2022/09/23 10:19:59 by malord           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	check_doubles(t_stack *stack_a)
 			if (stack_a->nb == tmp->nb && stack_a != tmp)
 			{
 				write (2, "Error\n", 6);
-				free_stack(stack_a);
+				free_stack(head);
 				exit(0);
 			}
 			else
@@ -36,7 +36,7 @@ void	check_doubles(t_stack *stack_a)
 	}
 }
 
-void	check_limits(char **array, int position)
+void	check_limits(char **array, int position, int calloc_flag)
 {
 	while (array[position])
 	{
@@ -45,15 +45,16 @@ void	check_limits(char **array, int position)
 			|| (ft_atol(array[position]) > INT_MAX))
 		{
 			write(2, "Error\n", 6);
+			if (calloc_flag == 1)
+				free_array(array);
 			exit(0);
 		}
 		else
 			position++;
 	}
-
 }
 
-void	check_numbers(char **argv, int index)
+void	check_numbers(char **argv, int index, int calloc_flag)
 {
 	int	j;
 
@@ -67,13 +68,8 @@ void	check_numbers(char **argv, int index)
 			if (ft_isdigit(argv[index][j]) == 0)
 			{
 				write (2, "Error\n", 6);
-				j = 0;
-				while (argv[j])
-				{
-					free(argv[j]);
-					j++;
-				}
-				free(argv);
+				if (calloc_flag == 1)
+					free_array(argv);
 				exit (0);
 			}
 			else
@@ -85,23 +81,24 @@ void	check_numbers(char **argv, int index)
 
 int	check_sorted(t_stack *stack_a, int size)
 {
-	int	index;
+	int		index;
+	t_stack	*head;
 
 	index = 0;
+	head = stack_a;
 	if (size <= 1)
 	{
 		free(stack_a);
 		exit (0);
 	}
-	while (index < size)
+	while (index++ < size)
 	{
 		if (stack_a->next != NULL && stack_a->nb < stack_a->next->nb)
 		{
 			stack_a = stack_a->next;
-			index++;
 			if (index == size - 1)
 			{
-				free_stack(stack_a);
+				free_stack(head);
 				exit (1);
 			}
 		}
@@ -123,8 +120,8 @@ void	check_split(char **argv, t_stack **stack_a)
 		free(quoted_args);
 		exit(0);
 	}
-	check_numbers(quoted_args, 0);
-	check_limits(quoted_args, 0);
+	check_numbers(quoted_args, 0, 1);
+	check_limits(quoted_args, 0, 1);
 	*stack_a = ft_calloc(sizeof(t_stack), 1);
 	to_int_list(quoted_args, 0, *stack_a);
 	while (quoted_args[i])

@@ -6,7 +6,7 @@
 /*   By: malord <malord@student.42quebec.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/21 15:45:18 by malord            #+#    #+#             */
-/*   Updated: 2022/09/22 15:58:19 by malord           ###   ########.fr       */
+/*   Updated: 2022/09/23 08:36:52 by malord           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,4 +40,17 @@ int	find_median(int size)
 	else
 		median = (size / 2) + 1;
 	return (median);
+}
+
+void	free_array(char **array)
+{
+	int	i;
+
+	i = 0;
+	while (array[i])
+	{
+		free(array[i]);
+		i++;
+	}
+	free(array);
 }

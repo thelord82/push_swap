@@ -6,7 +6,7 @@
 /*   By: malord <malord@student.42quebec.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/22 15:07:10 by malord            #+#    #+#             */
-/*   Updated: 2022/09/22 15:56:05 by malord           ###   ########.fr       */
+/*   Updated: 2022/09/23 10:19:09 by malord           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ typedef struct s_stacklist {
 	int					target_pos;
 	int					cost_a;
 	int					cost_b;
-	char				**quoted_args;
 	struct s_stacklist	*next;
 }		t_stack;
 
@@ -31,9 +30,9 @@ void	check_split(char **argv, t_stack **stack_a);
 void	to_int_list(char **array, int position, t_stack *stack_a);
 int		check_sorted(t_stack *stack_a, int size);
 void	check_errors(char **argv, int index);
-void	check_numbers(char **argv, int index);
+void	check_numbers(char **argv, int index, int calloc_flag);
 void	check_doubles(t_stack *stack_a);
-void	check_limits(char **array, int position);
+void	check_limits(char **array, int position, int calloc_flag);
 int		lst_size(t_stack *stack_a);
 void	swap(t_stack **stack_a);
 void	do_sa(t_stack **stack_a);
@@ -70,5 +69,6 @@ void	position_stacks(t_stack **stack_a, t_stack **stack_b);
 void	get_position(t_stack **stack_a);
 int		get_lowest_index_position(t_stack **stack);
 void	get_cost(t_stack **stack_a, t_stack **stack_b);
+void	free_array(char **array);
 
 #endif

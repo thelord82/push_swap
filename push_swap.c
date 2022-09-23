@@ -6,7 +6,7 @@
 /*   By: malord <malord@student.42quebec.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/22 15:06:30 by malord            #+#    #+#             */
-/*   Updated: 2022/09/22 15:57:02 by malord           ###   ########.fr       */
+/*   Updated: 2022/09/23 10:19:35 by malord           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,15 +105,13 @@ int	main(int argc, char **argv)
 	stack_a = NULL;
 	stack_b = NULL;
 	if (argc < 2)
-	{
 		exit (0);
-	}
 	if (argc == 2)
 		check_split(argv, &stack_a);
 	else if (argc > 2)
 	{
-		check_numbers(argv, 1);
-		check_limits(argv, 1);
+		check_numbers(argv, 1, 0);
+		check_limits(argv, 1, 0);
 		stack_a = ft_calloc(sizeof(t_stack), 1);
 		if (!stack_a)
 			exit (0);
