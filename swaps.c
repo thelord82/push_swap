@@ -6,7 +6,7 @@
 /*   By: malord <malord@student.42quebec.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 15:06:42 by malord            #+#    #+#             */
-/*   Updated: 2022/09/22 09:38:24 by malord           ###   ########.fr       */
+/*   Updated: 2022/09/27 15:13:08 by malord           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,16 @@
 
 void	swap(t_stack **stack_a)
 {
-	int	tmp;
+	t_stack	*new_head;
+	t_stack	*tmp;
+	t_stack	*tmp_2;
 
-	tmp = (*stack_a)->nb;
-	(*stack_a)->nb = (*stack_a)->next->nb;
-	(*stack_a)->next->nb = tmp;
-	tmp = (*stack_a)->index;
-	(*stack_a)->index = (*stack_a)->next->index;
-	(*stack_a)->next->index = tmp;
+	new_head = (*stack_a)->next;
+	tmp = *stack_a;
+	tmp_2 = (*stack_a)->next->next;
+	*stack_a = new_head;
+	(*stack_a)->next = tmp;
+	(*stack_a)->next->next = tmp_2;
 }
 
 void	do_sa(t_stack **stack_a)
