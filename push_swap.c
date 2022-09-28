@@ -6,12 +6,13 @@
 /*   By: malord <malord@student.42quebec.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/22 15:06:30 by malord            #+#    #+#             */
-/*   Updated: 2022/09/23 10:19:35 by malord           ###   ########.fr       */
+/*   Updated: 2022/09/28 10:18:42 by malord           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
+// Algorithm to sort 3 numbers in ascending order
 void	sort_three(t_stack **stack_a)
 {
 	int	i;
@@ -31,6 +32,7 @@ void	sort_three(t_stack **stack_a)
 	}
 }
 
+// Shifts the stack to put the lowest value at the top of stack_a
 void	shift_stack(t_stack **stack_a)
 {
 	int	lowest_pos;

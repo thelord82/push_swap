@@ -6,7 +6,7 @@
 /*   By: malord <malord@student.42quebec.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 16:31:04 by malord            #+#    #+#             */
-/*   Updated: 2022/09/22 14:48:55 by malord           ###   ########.fr       */
+/*   Updated: 2022/09/28 10:16:05 by malord           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ void	do_pa(t_stack **stack_a, t_stack **stack_b)
 	printf("pa\n");
 }
 
+// Pushes to stack_b every number that is smaller than the established median
 void	push_b_below_median(t_stack **stack_a, t_stack **stack_b)
 {
 	int		size;
