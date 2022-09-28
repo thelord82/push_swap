@@ -6,7 +6,7 @@
 /*   By: malord <malord@student.42quebec.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/01 08:40:35 by malord            #+#    #+#             */
-/*   Updated: 2022/09/06 15:41:23 by malord           ###   ########.fr       */
+/*   Updated: 2022/09/28 09:45:12 by malord           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ void	ft_putstr_fd(char *s, int fd);
 void	ft_striteri(char *s, void (*f)(unsigned int, char*));
 void	ft_swap(int *a, int *b);
 void	sort_int_tab(int *tab, unsigned int size);
+void	free_double_array(void **array);
 
 // void * return values functions
 

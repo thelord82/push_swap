@@ -6,7 +6,7 @@
 #    By: malord <malord@student.42quebec.com>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/30 09:39:10 by malord            #+#    #+#              #
-#    Updated: 2022/09/22 12:07:15 by malord           ###   ########.fr        #
+#    Updated: 2022/09/28 09:42:17 by malord           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -69,6 +69,7 @@ SRCS		=	ft_atoi.c				\
 				ft_swap.c				\
 				ft_tolower.c			\
 				ft_toupper.c			\
+				free_double_array.c		\
 				get_next_line.c			\
 				sort_int_tab.c
 
